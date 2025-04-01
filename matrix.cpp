@@ -3,15 +3,18 @@
 #include <iomanip>
 #include <stdexcept>
 #include <utility>
+#include <iostream>
 
 Matrix::Matrix(std::size_t N) : size(N), data(N, std::vector<int>(N, 0)) {}
 
-Matrix::Matrix(const std::vector<std::vector<int>>& nums) {
-    if (nums.empty() || nums.size() != nums[0].size()) {
-        throw std::invalid_argument("Matrix must be square");
+Matrix::Matrix(const std::vector<std::vector<int>>& nums) 
+    : size(nums.size()), data(nums) {
+    // Verify matrix is square
+    for (const auto& row : nums) {
+        if (row.size() != size) {
+            throw std::invalid_argument("Matrix must be square");
+        }
     }
-    size = nums.size();
-    data = nums;
 }
 
 Matrix Matrix::readFromFile(const std::string& filename, std::size_t matrixNum) {
