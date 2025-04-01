@@ -5,8 +5,10 @@
 #include <utility>
 #include <iostream>
 
+// Constructor for NxN matrix
 Matrix::Matrix(std::size_t N) : size(N), data(N, std::vector<int>(N, 0)) {}
 
+// Constructor from existing 2D vector
 Matrix::Matrix(const std::vector<std::vector<int>>& nums) 
     : size(nums.size()), data(nums) {
     // Verify matrix is square
@@ -26,7 +28,7 @@ Matrix Matrix::readFromFile(const std::string& filename, std::size_t matrixNum) 
     std::size_t N;
     file >> N;
 
-    // Skip lines for previous matrices
+    // Skip matrices before the one we want
     for (std::size_t m = 0; m < matrixNum; ++m) {
         for (std::size_t i = 0; i < N; ++i) {
             for (std::size_t j = 0; j < N; ++j) {
@@ -36,7 +38,7 @@ Matrix Matrix::readFromFile(const std::string& filename, std::size_t matrixNum) 
         }
     }
 
-    // Read current matrix
+    // Read the matrix data
     std::vector<std::vector<int>> matrixData(N, std::vector<int>(N));
     for (std::size_t i = 0; i < N; ++i) {
         for (std::size_t j = 0; j < N; ++j) {
@@ -46,7 +48,7 @@ Matrix Matrix::readFromFile(const std::string& filename, std::size_t matrixNum) 
         }
     }
 
-    return Matrix(matrixData);
+    return Matrix(matrixData); // This will now be unambiguous
 }
 
 Matrix Matrix::operator+(const Matrix& rhs) const {
