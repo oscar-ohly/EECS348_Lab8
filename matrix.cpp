@@ -4,14 +4,14 @@
 #include <stdexcept>
 #include <utility>
 
-Matrix::Matrix(const std::vector<std::vector<int>>& nums) : data(nums) {
-    int size = nums.size();
-    // Verify matrix is square
-    for (const auto& row : nums) {
-        if (row.size() != size) {
-            throw std::invalid_argument("Matrix must be square");
-        }
+Matrix::Matrix(std::size_t N) : size(N), data(N, std::vector<int>(N, 0)) {}
+
+Matrix::Matrix(const std::vector<std::vector<int>>& nums) {
+    if (nums.empty() || nums.size() != nums[0].size()) {
+        throw std::invalid_argument("Matrix must be square");
     }
+    size = nums.size();
+    data = nums;
 }
 
 Matrix Matrix::readFromFile(const std::string& filename, std::size_t matrixNum) {
@@ -26,8 +26,10 @@ Matrix Matrix::readFromFile(const std::string& filename, std::size_t matrixNum) 
     // Skip lines for previous matrices
     for (std::size_t m = 0; m < matrixNum; ++m) {
         for (std::size_t i = 0; i < N; ++i) {
-            std::string line;
-            std::getline(file >> std::ws, line);
+            for (std::size_t j = 0; j < N; ++j) {
+                int dummy;
+                file >> dummy;
+            }
         }
     }
 
@@ -66,6 +68,7 @@ Matrix Matrix::operator*(const Matrix& rhs) const {
     Matrix result(size);
     for (std::size_t i = 0; i < size; ++i) {
         for (std::size_t j = 0; j < size; ++j) {
+            result.data[i][j] = 0;
             for (std::size_t k = 0; k < size; ++k) {
                 result.data[i][j] += data[i][k] * rhs.data[k][j];
             }
@@ -124,8 +127,6 @@ void Matrix::swap_cols(std::size_t c1, std::size_t c2) {
     }
 }
 
-Matrix::Matrix(std::size_t N) : size(N), data(N, std::vector<int>(N, 0)) {}
-
 void Matrix::print_matrix() const {
     for (const auto& row : data) {
         for (int val : row) {
@@ -134,4 +135,3 @@ void Matrix::print_matrix() const {
         std::cout << '\n';
     }
 }
-
