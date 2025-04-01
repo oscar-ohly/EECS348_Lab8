@@ -10,10 +10,6 @@ private:
     std::size_t size; 
     std::vector<std::vector<int>> data;
 public:
-    explicit Matrix(std::size_t N);  // Added explicit
-    explicit Matrix(const std::vector<std::vector<int>>& nums);  // Added explicit
-    
-    Matrix(std::size_t N);
     Matrix(const std::vector<std::vector<int>> &nums);
     Matrix(std::vector<std::vector<int>> nums);
 
