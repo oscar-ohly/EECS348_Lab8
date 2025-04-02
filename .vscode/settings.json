@@ -51,7 +51,8 @@
         "__string": "cpp",
         "chrono": "cpp",
         "compare": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "utility": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }
